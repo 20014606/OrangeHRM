@@ -14,7 +14,7 @@ from webdriver_manager.chrome import ChromeDriverManager
 def test_setup():
     global driver
     #driver = webdriver.Chrome(executable_path="C:/Users/hp/Downloads/chromedriver_win32/chromedriver.exe")
-    driver = webdriver.Chrome(service=ChromeService(ChromeDriverManager(driver_version="114").install()))
+    driver = webdriver.Chrome(service=ChromeService(ChromeDriverManager(driver_version="114.0.5735.90").install()))
     driver.implicitly_wait(15)
     driver.maximize_window();
     #yield
