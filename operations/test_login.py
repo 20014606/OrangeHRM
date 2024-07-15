@@ -9,12 +9,12 @@ from selenium.webdriver.common.by import By
 from webdriver_manager.chrome import ChromeDriverManager
 
 
-
 @pytest.fixture()
 def test_setup():
     global driver
     #driver = webdriver.Chrome(executable_path="C:/Users/hp/Downloads/chromedriver_win32/chromedriver.exe")
-    driver = webdriver.Chrome(service=ChromeService(ChromeDriverManager(driver_version="114.0.5735.90").install()))
+    service = ChromeService('/tmp/chromedriver')
+    driver = webdriver.Chrome(service=service)
     driver.implicitly_wait(15)
     driver.maximize_window();
     #yield
