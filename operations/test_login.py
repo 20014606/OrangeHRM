@@ -19,7 +19,7 @@ def test_setup():
     #chromedriver_autoinstaller.install()
     #driver = webdriver.Chrome()
 
-    service = Service(executable_path=ChromeDriverManager().install())
+    service = Service(executable_path=ChromeDriverManager(driver_version="126.0.6478.62").install())
     options = Options()
     options.add_argument('--disable-blink-features=AutomationControlled')  ## to avoid getting detected
     options.add_argument('headless')
