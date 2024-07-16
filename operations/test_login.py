@@ -13,8 +13,8 @@ import chromedriver_autoinstaller
 def test_setup():
     global driver
     #driver = webdriver.Chrome(executable_path="C:/Users/hp/Downloads/chromedriver_win32/chromedriver.exe")
-    #driver = webdriver.Chrome(service=ChromeService(ChromeDriverManager(driver_version="126.0.6478.126").install()))
-    chromedriver_autoinstaller.install()
+    driver = webdriver.Chrome(service=ChromeService(ChromeDriverManager(driver_version="126.0.6478.62").install()))
+    #chromedriver_autoinstaller.install()
     driver = webdriver.Chrome()
     driver.implicitly_wait(15)
     driver.maximize_window()
