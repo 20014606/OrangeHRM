@@ -15,20 +15,16 @@ from selenium.webdriver.chrome.service import Service
 def test_setup():
     global driver
     #driver = webdriver.Chrome(executable_path="/Users/rohitwadi/PycharmProjects/OrangeHRM/chromedriver")
-    service = Service('/Users/rohitwadi/PycharmProjects/OrangeHRM/chromedriver')
-    driver = webdriver.Chrome(service=service)
-
-
     #driver = webdriver.Chrome(service=ChromeService(ChromeDriverManager(driver_version="126.0.6478.62").install()))
     #chromedriver_autoinstaller.install()
     #driver = webdriver.Chrome()
 
-    # service = Service(executable_path=ChromeDriverManager(driver_version="126.0.6478.126").install())
-    # options = Options()
-    # options.add_argument('--disable-blink-features=AutomationControlled')  ## to avoid getting detected
-    # options.add_argument('headless')
-    # options.add_argument('--disable-dev-shm-usage')
-    # driver = webdriver.Chrome(service=service, options=options)
+    service = Service(executable_path=ChromeDriverManager(driver_version="126.0.6478.126").install())
+    options = Options()
+    options.add_argument('--disable-blink-features=AutomationControlled')
+    options.add_argument('headless')
+    options.add_argument('--disable-dev-shm-usage')
+    driver = webdriver.Chrome(service=service, options=options)
     driver.implicitly_wait(15)
     driver.maximize_window()
     #yield
