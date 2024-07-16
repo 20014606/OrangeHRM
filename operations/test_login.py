@@ -18,6 +18,7 @@ def test_setup():
     service = Service('/Users/rohitwadi/PycharmProjects/OrangeHRM/chromedriver')
     driver = webdriver.Chrome(service=service)
 
+
     #driver = webdriver.Chrome(service=ChromeService(ChromeDriverManager(driver_version="126.0.6478.62").install()))
     #chromedriver_autoinstaller.install()
     #driver = webdriver.Chrome()
