@@ -8,14 +8,23 @@ from selenium.webdriver.chrome.service import Service as ChromeService
 from selenium.webdriver.common.by import By
 from webdriver_manager.chrome import ChromeDriverManager
 import chromedriver_autoinstaller
+from selenium.webdriver.chrome.options import Options
+from selenium.webdriver.chrome.service import Service
 
 @pytest.fixture()
 def test_setup():
     global driver
     #driver = webdriver.Chrome(executable_path="C:/Users/hp/Downloads/chromedriver_win32/chromedriver.exe")
     #driver = webdriver.Chrome(service=ChromeService(ChromeDriverManager(driver_version="126.0.6478.62").install()))
-    chromedriver_autoinstaller.install()
-    driver = webdriver.Chrome()
+    #chromedriver_autoinstaller.install()
+    #driver = webdriver.Chrome()
+
+    service = Service(executable_path=ChromeDriverManager().install())
+    options = Options()
+    options.add_argument('--disable-blink-features=AutomationControlled')  ## to avoid getting detected
+    options.add_argument('headless')
+    options.add_argument('--disable-dev-shm-usage')
+    driver = webdriver.Chrome(service=service, options=options)
     driver.implicitly_wait(15)
     driver.maximize_window()
     #yield
