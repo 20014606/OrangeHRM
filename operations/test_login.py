@@ -15,48 +15,49 @@ from selenium.webdriver.chrome.service import Service
 def test_setup():
     global driver
     #driver = webdriver.Chrome(executable_path="/Users/rohitwadi/PycharmProjects/OrangeHRM/chromedriver")
-    #driver = webdriver.Chrome(service=ChromeService(ChromeDriverManager(driver_version="126.0.6478.62").install()))
+    driver = webdriver.Chrome(service=ChromeService(ChromeDriverManager().install()))
     #chromedriver_autoinstaller.install()
-    #driver = webdriver.Chrome()
+    driver = webdriver.Chrome()
 
-    service = Service(executable_path=ChromeDriverManager(latest_release_url='https://chromedriver.storage.googleapis.com/113.0.5672.63/chromedriver_mac_arm64.zip', driver_version="113.0.5672.63").install())
-   # https: // chromedriver.storage.googleapis.com / 113.0.5672.63 / chromedriver_mac_arm64.zip
-    options = Options()
-    options.add_argument('--disable-blink-features=AutomationControlled')
-    options.add_argument('headless')
-    options.add_argument('--disable-dev-shm-usage')
-    driver = webdriver.Chrome(service=service, options=options)
-    driver.implicitly_wait(15)
+    # service = Service(executable_path=ChromeDriverManager(latest_release_url='https://chromedriver.storage.googleapis.com/113.0.5672.63/chromedriver_mac_arm64.zip', driver_version="113.0.5672.63").install())
+    # options = Options()
+    # options.add_argument('--disable-blink-features=AutomationControlled')
+    # options.add_argument('headless')
+    # options.add_argument('--disable-dev-shm-usage')
+    # driver = webdriver.Chrome(service=service, options=options)
+    driver.implicitly_wait(20)
     driver.maximize_window()
     #yield
     #driver.quit()
 
 
-@allure.description("Validate OrangeHRM with valid credentials")
+@allure.description("Validate FoodOrderingApp with valid credentials")
 @allure.severity(severity_level="CRITICAL")
 def test_validLogin(test_setup):
-    driver.get("https://opensource-demo.orangehrmlive.com/web/index.php/auth/login");
-    driver.find_element(By.NAME, "username").clear()
-    driver.find_element(By.NAME, "password").clear()
-    driver.find_element(By.NAME, "username").send_keys("Admin")
-    driver.find_element(By.NAME, "password").send_keys("admin123")
+    driver.get("https://rohitwadi.pythonanywhere.com/")
+    driver.find_element(By.XPATH, "//a[contains(text(), 'Login')]").click()
+    driver.find_element(By.XPATH, "//input[@id='login_email']").clear()
+    driver.find_element(By.XPATH, "//input[@id='login_password']").clear()
+    driver.find_element(By.XPATH, "//input[@id='login_email']").send_keys("ro@gmail.com")
+    driver.find_element(By.XPATH, "//input[@id='login_password']").send_keys("Daksh123")
     log("Clicking Login Button")
-    driver.find_element(By.XPATH, "//button[@type='submit']").click()
-    assert "dashboard" in driver.current_url
+    driver.find_element(By.XPATH, "//input[@id='login_btn']").click()
+    assert "FOOD ORDERING APP" in driver.page_source
 
 
-@allure.description("Validate OrangeHRM with invalid credentials")
+@allure.description("Validate FoodOrderingApp with invalid credentials")
 @allure.severity(severity_level="NORMAL")
 def test_invalidLogin(test_setup):
-    driver.get("https://opensource-demo.orangehrmlive.com/web/index.php/auth/login");
-    driver.find_element(By.NAME, "username").clear()
-    driver.find_element(By.NAME, "password").clear()
-    driver.find_element(By.NAME, "username").send_keys("admin")
-    driver.find_element(By.NAME, "password").send_keys("rohit123")
-    log("Clicking login button")
-    driver.find_element(By.XPATH, "//button[@type='submit']").click()
+    driver.get("https://rohitwadi.pythonanywhere.com/")
+    driver.find_element(By.XPATH, "//a[contains(text(), 'Login')]").click()
+    driver.find_element(By.XPATH, "//input[@id='login_email']").clear()
+    driver.find_element(By.XPATH, "//input[@id='login_password']").clear()
+    driver.find_element(By.XPATH, "//input[@id='login_email']").send_keys("ro@gmail.com")
+    driver.find_element(By.XPATH, "//input[@id='login_password']").send_keys("rohit123")
+    log("Clicking Login Button")
+    driver.find_element(By.XPATH, "//input[@id='login_btn']").click()
     try:
-        assert "dashboard" in driver.current_url
+        assert "All Restaurants" in driver.page_source
     finally:
         if AssertionError:
             time.sleep(15)
